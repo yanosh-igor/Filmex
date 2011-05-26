@@ -43,11 +43,16 @@
                     </div>  
                     <div class="clear"></div>  
                     <div class="input">  
-                        <input type="text" value="enter search items" />  
-                    </div>  
+                       <?php echo $form->input('search', array(
+							'label'		=> '',
+							'type'		=> 'text',
+							'value'		=> $this->data['search']
+							)); ?>
+								
+							    </div>  
                     <div class="input">  
-                        <button type="submit"  name="submit">Filter</button>  
-                        <button type="submit" name="reset">Reset</button>  
+                        <button type="submit" name="data[filter]" value="filter">Filter</button>  
+                        <button type="submit" name="data[reset]" value="reset">Reset</button>  
                     </div> 
                       <div id="user-nav">	
 			<?php if($logged_in): ?>	

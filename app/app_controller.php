@@ -2,9 +2,8 @@
 class AppController extends Controller{
 	 
 	 var $components = array( 
-	 	
-	 'Auth'=>array(
-	 	'admin'=>true
+	  'Auth'=>array(
+	 	'admin'=>'true'
 	 		 	
 	 ),'Session');
 	 
@@ -109,7 +108,8 @@ return $result;
 }  
 
 	function beforeFilter(){
-		$this->Auth->allow('index','view','display','home');
+	//	$this->Auth->allow('index','view','display','home');
+		$this->Auth->allow(array('controller'=>'dvds','action'=>'index','index','view','display' ));
 		$this->authError = 'Please login to view the page.';
 		$this->loginError = 'Incorrect username/password combination.';
 		$this->loginRedirect = array('controller' => 'dvds','action' => 'index');

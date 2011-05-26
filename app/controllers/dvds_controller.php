@@ -4,7 +4,6 @@ class DvdsController extends AppController{
 	var $helpers = array('Html','Form','Javascript','Misc' );
 	
 	var $ratings = array('0'=>'0', '1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5', '6'=>'6', '7'=>'7', '8'=>'8', '9'=>'9', '10'=>'10');
-
 	
 	function index(){
 		$formats = $this->Dvd->Format->find('list', array(
@@ -35,37 +34,29 @@ class DvdsController extends AppController{
 				'Genre.status'=>'1'
 			)
 		));
-
 		// add name to option
 		$formats 	= array(''=>'Formats') + $formats;
 		$types	 	= array(''=>'Types') + $types;
 		$locations 	= array(''=>'Locations') + $locations;
 		$genres 	= array(''=>'Genres') + $genres;
-
-		//pr($formats); pr($types); pr($locations); pr($genres);
-
 		// if form submitted
 		if (!empty($this->data)) {
 			// if reset button pressed redirect to index page
 			if(isset($this->data['reset'])) {
-				$this->redirect(array('action'=>'admin_index'));
+				$this->redirect(array('action'=>'index'));
 			}
-
-			// init
+		// init
 			$url = '';
-
-			// remove search key if not set
+		// remove search key if not set
 			if($this->data['search'] == '') {
 				unset($this->data['search']);
 			}
-
-			// loop through filters
+		// loop through filters
 			foreach($this->data as $key=>$filter) {
 				// ignore submit button
 				if($key != 'filter') {
 					// init
 					$selected = '';
-
 					switch($key) {
 						case 'format':
 							$selected = $formats[$filter];
@@ -90,8 +81,6 @@ class DvdsController extends AppController{
 					}
 				}
 			}
-
-			// redirect
 			$this->redirect('/dvds/index/'.$url);
 		} else {
 			// set form options
@@ -101,7 +90,6 @@ class DvdsController extends AppController{
 			$this->data['genre'] = '';
 			$this->data['search'] = '';
 		}
-
 		// if any parameters have been passed
 		if(!empty($this->params['pass'])) {
 			// only select active dvds
@@ -115,7 +103,6 @@ class DvdsController extends AppController{
 				if(isset($params[$key+1])) {
 					$value = $params[$key+1];
 				}
-				
 				// switch on param
 				switch($param)
 				{
@@ -177,9 +164,6 @@ class DvdsController extends AppController{
 					break;
 				}
 			}
-
-			//pr($conditions);
-
 			// get all dvds with param conditions
 			$dvds = $this->Dvd->find('all', array(
 				'order'	=> 'Dvd.name',
@@ -200,15 +184,12 @@ class DvdsController extends AppController{
 							break;
 						}
 					}
-
-					// if the genre was not found in dvds
 					if(!$found) {
 						// remove from list
 						unset($dvds[$key]);
 					}
 				}
 			}
-
 		} else {
 			// get all dvds from database where status = 1, order by name
 			$dvds = $this->Dvd->find('all', array(
@@ -218,16 +199,12 @@ class DvdsController extends AppController{
 				)
 			));
 		}
-
-		// set page title
 		$this->pageTitle = 'Filmes - Index Page';
 		// set layout file
 		$this->layout = 'index';
 		// save the dvds in a variable for the view
 		$this->set(compact('formats', 'types', 'locations', 'genres', 'dvds'));
 	}
-
-
 
 	function view($slug = null){
 	if(!$slug){
@@ -262,15 +239,12 @@ $recursive=0;
 $dvds = $this->Dvd->find('all',array('conditions'=>array('Dvd.status' => 1,'User.id'=>$this->Auth->user('id'))),
 	array('order' => array('Dvd.name' => 'ASC'))
 );  
-
-
     $this->set('dvds', $dvds);  
 	}
 	
 	function admin_add(){
 	 if (!empty($this->data)) {  
-        
-        // check for image  
+       // check for image  
         $image_ok = $this->_upload_image();  
   if(isset($errors)) {  
     echo $misc->display_errors($errors);  
@@ -291,9 +265,6 @@ $dvds = $this->Dvd->find('all',array('conditions'=>array('Dvd.status' => 1,'User
             )  
         ));  
         }  }
-    
-       
-  
         // if slug is not taken  
         if(empty($dvd)) {  
             // try saving the format  
@@ -351,10 +322,7 @@ $dvds = $this->Dvd->find('all',array('conditions'=>array('Dvd.status' => 1,'User
             )  
         ));  
         }  }
-    
-       
-  
-        // if slug is not taken  
+            // if slug is not taken  
         if(empty($dvd) || $dvd['Dvd']['id'] == $id) {  
             // try saving the format  
             if ($this->Dvd->save($this->data)) {  
@@ -373,7 +341,6 @@ $dvds = $this->Dvd->find('all',array('conditions'=>array('Dvd.status' => 1,'User
         }  
 		
 	}
-	
 	if (empty($this->data)){
 	$this->data = $this->Dvd->read(null,$id);
 	
@@ -420,7 +387,6 @@ $dvds = $this->Dvd->find('all',array('conditions'=>array('Dvd.status' => 1,'User
 return $image_ok;  
 }
 
-
 function footer() {  
     // if the data has been requested  
     if(isset($this->params['requested'])) {  
@@ -434,27 +400,23 @@ function footer() {
     }  
 }  
   
-/** 
- * top_genres() 
- * gets the most active genres from the db 
- */  
 function top_genres() {  
-    // if the data has been requested  
+   
     if(isset($this->params['requested'])) {  
-        // get all genres  
+       
         $genres = $this->Dvd->Genre->find('all');  
-        // init  
+       
         $sorted = array();  
-        // loop through  
+       
         foreach($genres as $key=>$g) {  
             $sorted[$g['Genre']['slug']] = count($g['Dvd']);  
         }  
-        // sort the array  
+       
         arsort($sorted);  
   
         return array_slice($sorted, 0, 5);  
     } else {  
-        // redirect to index  
+       
         $this->redirect(array('action'=>'index'));  
     }  
 }  
@@ -462,19 +424,13 @@ function top_genres() {
 function _create_genre_string($genres) {  
     // init  
     $genre_string = '';  
-  
-    // if genres array not empty  
-    if(!empty($genres)) {  
-        // loop through genres and save name as a string  
+  if(!empty($genres)) {  
+     
         foreach($genres as $g) {  
             $genre_string .= $g['name'].", ";  
         }  
     }  
-  
-return $genre_string;  
+ return $genre_string;  
 }  
-
-	
 }
-
 ?>
