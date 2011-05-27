@@ -2,8 +2,8 @@
 <div id="wrapper-header">  
     <div id="header">  
         <div class="logo">  
-            <h1>Filmex</h1>  
-            <h2>an online application to track and catalog your collection of dvds built using cakephp</h2>  
+           <h1>Filmex</h1>  
+            <h2>an online application to track and catalog your collection of dvds built using cakephp</h2>   
         </div>  
   
         <div class="filters">  
@@ -51,7 +51,7 @@
 								
 							    </div>  
                     <div class="input">  
-                        <button type="submit" name="data[filter]" value="filter">Filter</button>  
+                        <button type="submit" name="data[filter]" value="filter">Search</button>  
                         <button type="submit" name="data[reset]" value="reset">Reset</button>  
                     </div> 
                       <div id="user-nav">	

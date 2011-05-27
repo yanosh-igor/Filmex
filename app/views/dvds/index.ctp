@@ -18,9 +18,10 @@
                     	
                       <div class="hovergallery">
                     <div class="dvd<?php echo $last_dvd; ?>">  
-                        <a href="dvds/view/<?php echo $dvd['Dvd']['slug']; ?>">  
-                        <img src="<?php echo $dvd['Dvd']['image']; ?>" alt="DVD Image: <?php echo $dvd['Dvd']['name'] ?>" width="100" height="150" />  
-                        </a>  
+                       
+                        	<?php echo $html->link(
+                        	$html->image( '/'.$dvd['Dvd']['image'],array('width'=>'100','height'=>'150',"alt" => "DVD Image:".  $dvd['Dvd']['name'] )),array('controller' => 'dvds', 'action' => 'view', $dvd['Dvd']['slug'] ), array('escape' => false)); ?>
+                      
                     </div>  
    </div>  
                     <?php  
