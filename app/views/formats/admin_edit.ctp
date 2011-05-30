@@ -12,7 +12,9 @@
 <?php echo $form->end('Edit');?>  
 </div>  
   
-
+<ul class="actions">  
+    <li><?php echo $html->link('List Formats', array('action'=>'index'));?></li>  
+</ul>  
 <?php if(!empty($this->data['Dvd'])): ?>  
   
 <div class="related">  
@@ -39,6 +41,3 @@
   
 <?php endif; ?>  
   
-<ul class="actions">  
-    <li><?php echo $html->link('List Formats', array('action'=>'index'));?></li>  
-</ul>  
